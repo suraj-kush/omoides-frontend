@@ -4,44 +4,60 @@ import FileBase from "react-file-base64";
 import { useSelector, useDispatch } from "react-redux";
 import { createPost, updatePost } from "../../actions/posts.js";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
-import {useHistory} from 'react-router-dom'
+import { useHistory } from "react-router-dom";
+import ChipInput from "material-ui-chip-input";
 
 const Form = ({ currentID, setCurrentID }) => {
   const [postData, setPostData] = useState({
     title: "",
     message: "",
-    tags: "",
     selectedFile: null,
     likes: [],
     createdAt: Date.now,
   });
+  const [tags, setTags] = useState([]);
 
   const user = JSON.parse(localStorage.getItem("profile"));
-  const {posts}= useSelector(state => state.posts)
+  const { posts } = useSelector((state) => state.posts);
   const post = currentID ? posts.find((post) => post._id === currentID) : null;
   useEffect(() => {
     if (post) {
       setPostData({
         title: post.title,
         message: post.message,
-        tags: post.tags,
         selectedFile: post.selectedFile,
         likes: post.likes,
         createdAt: post.createdAt,
       });
+      setTags(post.tags);
     }
   }, [post]);
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
+  
+  const handleAdd = (chip) => {
+    setTags([...tags, chip]);
+  };
+  
+  const handleDelete = (chip) => {
+    setTags(tags.filter((tag) => tag !== chip));
+  };
+  
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     if (currentID) {
       dispatch(
-        updatePost(currentID, { ...postData, name: user?.result?.name, creator: user?.result?._id})
-      );
-    } else {
-      dispatch(createPost({ ...postData, name: user?.result?.name }, history));
+        updatePost(currentID, {
+          ...postData,
+          name: user?.result?.name,
+          creator: user?.result?._id,
+          tags: tags,
+        })
+        );
+      } else {
+      dispatch(createPost({ ...postData, name: user?.result?.name, tags:tags }, history));
     }
     clear();
   };
@@ -50,11 +66,11 @@ const Form = ({ currentID, setCurrentID }) => {
     setPostData({
       title: "",
       message: "",
-      tags: "",
       selectedFile: null,
       likes: [],
       createdAt: Date.now,
     });
+    setTags([]);
   };
   if (!user) {
     return (
@@ -90,7 +106,7 @@ const Form = ({ currentID, setCurrentID }) => {
         <TextField
           name="message"
           variant="outlined"
-          label="Caption" // it is message in the backend 
+          label="Caption" // it is message in the backend
           fullWidth
           rows={4}
           multiline
@@ -99,15 +115,15 @@ const Form = ({ currentID, setCurrentID }) => {
             setPostData({ ...postData, message: e.target.value });
           }}
         />
-        <TextField
-          name="tags"
-          variant="outlined"
+        <ChipInput
+          className={classes.chipInput}
+          value={tags}
           label="Tags"
           fullWidth
-          value={postData.tags}
-          onChange={(e) => {
-            setPostData({ ...postData, tags: e.target.value.split(",") });
-          }}
+          variant="outlined"
+          newChipKeyCodes={[32]}
+          onAdd={handleAdd}
+          onDelete={handleDelete}
         />
         <div className={classes.fileInput}>
           <FileBase

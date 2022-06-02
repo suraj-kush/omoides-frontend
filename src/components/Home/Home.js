@@ -100,6 +100,7 @@ const Home = () => {
                 className={classes.chipInput}
                 value={tags}
                 label="Search Tags"
+                newChipKeyCodes={[32]}
                 variant="outlined"
                 onAdd={handleAdd}
                 onDelete={handleDelete}

@@ -6,6 +6,9 @@ export default makeStyles((theme) => ({
       margin: theme.spacing(1),
     },
   },
+  chipInput: {
+    margin: "8px 7px",
+  },
   paper: {
     padding: theme.spacing(2),
   },
