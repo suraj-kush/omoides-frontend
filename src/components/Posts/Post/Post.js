@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 //prettier-ignore
-import {Card, Typography, CardActions, CardContent, CardMedia, Button} from "@material-ui/core";
+import {Card, Typography, CardActions, CardContent, CardMedia, Button, Menu, MenuItem} from "@material-ui/core";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ThumbUpAltOutlined from "@material-ui/icons/ThumbUpAltOutlined";
 import DeleleIcon from "@material-ui/icons/Delete";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import moment from "moment";
-import { useHistory } from "react-router-dom";
+import { useHistory} from "react-router-dom";
 
 import useStyles from "./styles.js";
 import { useDispatch } from "react-redux";
@@ -16,10 +16,44 @@ const Post = ({ post, setCurrentID }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
+
   const user = JSON.parse(localStorage.getItem("profile"));
   const [likes, setLikes] = useState(post?.likes);
+  const [anchorEl, setAnchorEl] = useState(null);
+
   const userID = user?.result?.googleId || user?.result?._id;
   const hasLikedPost = likes.find((like) => like === userID);
+
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    event.stopPropagation();
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = (event) => {
+    event.stopPropagation();
+    setAnchorEl(null);
+  };
+
+  const handleEdit=(event)=>{
+    event.stopPropagation();
+    setCurrentID(post._id);
+    setAnchorEl(null);
+  }
+
+
+  const handleDelete = (event) => {
+    event.stopPropagation();
+    dispatch(deletePost(post._id));
+  };
+
+  const handleShare = (event) => {
+    event.stopPropagation();
+    navigator.clipboard.writeText(
+      `${window.location.origin}/posts/${post._id}`
+    );
+    setAnchorEl(null);
+  };
 
   const handleLike = async () => {
     dispatch(likePost(post._id));
@@ -32,9 +66,7 @@ const Post = ({ post, setCurrentID }) => {
 
   const Likes = () => {
     if (likes.length > 0) {
-      return likes.find(
-        (like) => like === userID
-      ) ? (
+      return likes.find((like) => like === userID) ? (
         <>
           <ThumbUpAltIcon fontSize="small" />
           &nbsp;
@@ -81,13 +113,26 @@ const Post = ({ post, setCurrentID }) => {
             <Button
               style={{ color: "white", minWidth: "24px" }}
               size="small"
-              onClick={(e) => {
-                e.stopPropagation();
-                setCurrentID(post._id);
-              }}
+              onClick={handleClick}
             >
               <MoreHorizIcon fontSize="medium" />
             </Button>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+            >
+              {/* prettier-ignore */}
+              <MenuItem onClick={openPost}>View</MenuItem>
+              <MenuItem onClick={handleEdit}>Edit</MenuItem>
+              <MenuItem onClick={handleDelete}>Delete</MenuItem>
+              <MenuItem onClick={handleShare}>Share</MenuItem>
+              <MenuItem onClick={handleClose}>Cancel</MenuItem>
+            </Menu>
           </div>
         )}
         <div className={classes.details}>
@@ -119,9 +164,7 @@ const Post = ({ post, setCurrentID }) => {
             color="primary"
             className={classes.deleteBtn}
             align="right"
-            onClick={() => {
-              dispatch(deletePost(post._id));
-            }}
+            onClick={handleDelete}
           >
             <DeleleIcon fontSize="small" color="error" />
           </Button>
