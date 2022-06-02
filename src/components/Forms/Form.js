@@ -90,8 +90,10 @@ const Form = ({ currentID, setCurrentID }) => {
         <TextField
           name="message"
           variant="outlined"
-          label="Message"
+          label="Caption" // it is message in the backend 
           fullWidth
+          rows={4}
+          multiline
           value={postData.message}
           onChange={(e) => {
             setPostData({ ...postData, message: e.target.value });

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { Typography, TextField, Button } from "@material-ui/core/";
+import { Typography, TextField, Button, Grid } from "@material-ui/core/";
 import { commentPost } from "../../actions/posts";
 
 import useStyles from "./styles";
@@ -27,42 +27,49 @@ const CommentSection = ({ post }) => {
   return (
     <div>
       <div className={classes.commentsOuterContainer}>
-        <div className={classes.commentsInnerContainer}>
-          <Typography gutterBottom variant="h6">
-            Comments
-          </Typography>
-          {comments?.map((comment, index) => (
-            <Typography key={index} gutterBottom variant="subtitle1">
-                {comment}
-            </Typography>
-          ))}
-          <div ref={commentsRef} />
-        </div>
-        <div style={{ width: "70%" }}>
-          <Typography gutterBottom variant="h6">
-            Write a comment
-          </Typography>
-          <TextField
-            fullWidth
-            rows={4}
-            variant="outlined"
-            label="Comment"
-            multiline
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-          />
-          <br />
-          <Button
-            style={{ marginTop: "10px" }}
-            fullWidth
-            disabled={!comment.length}
-            color="primary"
-            variant="contained"
-            onClick={handleComment}
-          >
-            Comment
-          </Button>
-        </div>
+        <Grid
+          container
+          spacing={3}
+          alignItems="stretch"
+          justifyContent="space-between"
+        >
+          <Grid className={classes.commentsInnerContainer} item xs={12} sm={12} md={12} lg={6}>
+              <Typography gutterBottom variant="h6">
+                Comments
+              </Typography>
+              {comments?.map((comment, index) => (
+                <Typography key={index} gutterBottom variant="subtitle1">
+                  {comment}
+                </Typography>
+              ))}
+              <div ref={commentsRef} />
+          </Grid>
+          <Grid item xs={12} sm={12} md={12} lg={6}>
+              <Typography gutterBottom variant="h6">
+                Write a comment
+              </Typography>
+              <TextField
+                fullWidth
+                rows={4}
+                variant="outlined"
+                label="Comment"
+                multiline
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+              />
+              <br />
+              <Button
+                style={{ marginTop: "10px" }}
+                fullWidth
+                disabled={!comment.length}
+                color="primary"
+                variant="contained"
+                onClick={handleComment}
+              >
+                Comment
+              </Button>
+          </Grid>
+        </Grid>
       </div>
     </div>
   );

@@ -28,14 +28,14 @@ const PostDetails = () => {
     //eslint-disable-next-line
   }, [post]);
 
-  if (!post) return null;
-  if (isLoading) {
+  if (isLoading && post) {
     return (
       <Paper className={classes.loadingPaper} elevation={6}>
         <CircularProgress size="7em" />
       </Paper>
     );
   }
+  if (!post) return null;
 
   const recommededPosts = posts.filter(({ _id }) => _id !== id);
 
