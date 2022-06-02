@@ -13,6 +13,8 @@ const CommentSection = ({ post }) => {
   const classes = useStyles();
   const commentsRef = useRef();
 
+  const isLoggedIn = user?.result?.name;
+
   const handleComment = async () => {
     const newComments = await dispatch(
       commentPost(`${user?.result?.name}: ${comment}`, post._id)
@@ -33,18 +35,26 @@ const CommentSection = ({ post }) => {
           alignItems="stretch"
           justifyContent="space-between"
         >
-          <Grid className={classes.commentsInnerContainer} item xs={12} sm={12} md={12} lg={6}>
-              <Typography gutterBottom variant="h6">
-                Comments
+          <Grid
+            className={classes.commentsInnerContainer}
+            item
+            xs={12}
+            sm={12}
+            md={12}
+            lg={isLoggedIn ? 6 : 12}
+          >
+            <Typography gutterBottom variant="h6">
+              Comments
+            </Typography>
+            {comments?.map((comment, index) => (
+              <Typography key={index} gutterBottom variant="subtitle1">
+                {comment}
               </Typography>
-              {comments?.map((comment, index) => (
-                <Typography key={index} gutterBottom variant="subtitle1">
-                  {comment}
-                </Typography>
-              ))}
-              <div ref={commentsRef} />
+            ))}
+            <div ref={commentsRef} />
           </Grid>
-          <Grid item xs={12} sm={12} md={12} lg={6}>
+          {isLoggedIn && (
+            <Grid item xs={12} sm={12} md={12} lg={6}>
               <Typography gutterBottom variant="h6">
                 Write a comment
               </Typography>
@@ -68,7 +78,8 @@ const CommentSection = ({ post }) => {
               >
                 Comment
               </Button>
-          </Grid>
+            </Grid>
+          )}
         </Grid>
       </div>
     </div>
