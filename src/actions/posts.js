@@ -40,7 +40,7 @@ export const createPost = (newPost, history) => async (dispatch) => {
     dispatch({ type: actions.START_LOADING });
     const { data } = await api.createPost(newPost);
     dispatch({ type: actions.CREATE, payload: data });
-    history.push(`/post/${data._id}`);
+    history.push(`/posts/${data._id}`);
     dispatch({ type: actions.END_LOADING });
   } catch (error) {
     console.log(error);
