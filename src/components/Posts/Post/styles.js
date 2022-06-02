@@ -2,7 +2,6 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export default makeStyles({
   deleteBtn:{
-    maxWidth: "20px",
     minWidth: "20px",
   },
   view: {
