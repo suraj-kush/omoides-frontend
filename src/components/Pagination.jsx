@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Pagination, PaginationItem } from "@material-ui/lab";
-import { Link } from "react-router-dom";
-import { getPosts } from "../actions/posts";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Pagination, PaginationItem } from '@material-ui/lab';
+import { Link } from 'react-router-dom';
+import { getPosts } from '../actions/posts';
 
-import useStyles from "./styles.js";
+import useStyles from './styles.js';
 
 const Paginate = ({ page }) => {
   const classes = useStyles();
@@ -13,7 +13,7 @@ const Paginate = ({ page }) => {
 
   useEffect(() => {
     if (page) dispatch(getPosts(page));
-  }, [page, dispatch]);
+  }, [page, totalPages, dispatch]);
 
   //   const handleChange = (event, value) => {
   //     setCurrentPage(value);

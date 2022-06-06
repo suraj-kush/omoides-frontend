@@ -6,16 +6,22 @@ import ThumbUpAltOutlined from '@material-ui/icons/ThumbUpAltOutlined';
 import DeleleIcon from '@material-ui/icons/Delete';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import moment from 'moment';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import useStyles from './styles.js';
 import { useDispatch } from 'react-redux';
-import { deletePost, likePost } from '../../../actions/posts.js';
+import { deletePost, likePost, getPosts } from '../../../actions/posts.js';
+
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 
 const Post = ({ post, setCurrentID }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
+  const query = useQuery();
+  const page = query.get('page') || 1;
 
   const user = JSON.parse(localStorage.getItem('profile'));
   const [likes, setLikes] = useState(post?.likes);
@@ -44,6 +50,7 @@ const Post = ({ post, setCurrentID }) => {
   const handleDelete = (event) => {
     event.stopPropagation();
     dispatch(deletePost(post._id));
+    dispatch(getPosts(page));
   };
 
   const handleShare = (event) => {
