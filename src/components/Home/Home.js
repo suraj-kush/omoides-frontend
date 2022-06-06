@@ -112,8 +112,6 @@ const Home = () => {
               </Button>
             </AppBar>
             <Forms setCurrentID={setCurrentID} currentID={currentID} />
-            {/* //console log search tags length */}
-            {console.log(searchTags.length)}
             {(!searchQuery && !searchTags.length) && (
               <Paper className={classes.pagination} elevation={6}>
                 <Pagination page={page} />

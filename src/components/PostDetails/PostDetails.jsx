@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 //prettier-ignore
 import {Paper, Typography, CircularProgress, Divider} from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams, useHistory } from "react-router-dom";
-import moment from "moment";
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams, useHistory } from 'react-router-dom';
+import moment from 'moment';
 
-import useStyles from "./styles.js";
-import { getPost, getPostsBySearch } from "../../actions/posts";
-import CommentSection from "./CommentSection.jsx";
+import useStyles from './styles.js';
+import { getPost, getPostsBySearch } from '../../actions/posts';
+import CommentSection from './CommentSection.jsx';
 
 const PostDetails = () => {
   const { post, posts, isLoading } = useSelector((state) => state.posts);
@@ -23,7 +23,7 @@ const PostDetails = () => {
 
   useEffect(() => {
     if (post) {
-      dispatch(getPostsBySearch({ search: "", tags: post?.tags.join(",") }));
+      dispatch(getPostsBySearch({ search: '', tags: post?.tags.join(',') }));
     }
     //eslint-disable-next-line
   }, [post]);
@@ -65,20 +65,20 @@ const PostDetails = () => {
           <Typography variant="body1">
             {moment(post.createdAt).fromNow()}
           </Typography>
-          <Divider style={{ margin: "20px 0" }} />
+          <Divider style={{ margin: '20px 0' }} />
           <Typography variant="body1">
             <strong>Realtime Chat - coming soon!</strong>
           </Typography>
-          <Divider style={{ margin: "20px 0" }} />
+          <Divider style={{ margin: '20px 0' }} />
           <CommentSection post={post} />
-          <Divider style={{ margin: "20px 0" }} />
+          <Divider style={{ margin: '20px 0' }} />
         </div>
         <div className={classes.imageSection}>
           <img
             className={classes.media}
             src={
               post.selectedFile ||
-              "https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
+              'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'
             }
             alt={post.title}
           />
@@ -99,10 +99,10 @@ const PostDetails = () => {
                 tags,
                 name,
                 createdAt,
-                _id,
+                _id
               }) => (
                 <div
-                  style={{ margin: "20px", cursor: "pointer" }}
+                  style={{ margin: '20px', cursor: 'pointer' }}
                   key={_id}
                   onClick={() => openPost(_id)}
                 >

@@ -1,29 +1,25 @@
-import React, { useState, useRef } from "react";
-import { useDispatch } from "react-redux";
-import { Typography, TextField, Button, Grid } from "@material-ui/core/";
-import { commentPost } from "../../actions/posts";
+import React, { useState, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { Typography, TextField, Button, Grid } from '@material-ui/core/';
+import { commentPost } from '../../actions/posts';
 
-import useStyles from "./styles";
+import useStyles from './styles';
 
 const CommentSection = ({ post }) => {
-  const user = JSON.parse(localStorage.getItem("profile"));
-  const [comment, setComment] = useState("");
+  const user = JSON.parse(localStorage.getItem('profile'));
+  const [comment, setComment] = useState('');
   const dispatch = useDispatch();
   const [comments, setComments] = useState(post?.comments);
   const classes = useStyles();
   const commentsRef = useRef();
 
   const isLoggedIn = user?.result?.name;
-
   const handleComment = async () => {
-    const newComments = await dispatch(
-      commentPost(`${user?.result?.name}: ${comment}`, post._id)
-    );
-
-    setComments(newComments);
-    setComment("");
-
-    commentsRef.current.scrollIntoView({ behavior: "smooth" });
+    const newComment = `${user?.result?.name}: ${comment}`;
+    setComments([...comments, newComment]);
+    setComment('');
+    await dispatch(commentPost(`${user?.result?.name}: ${comment}`, post._id));
+    commentsRef.current.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -69,7 +65,7 @@ const CommentSection = ({ post }) => {
               />
               <br />
               <Button
-                style={{ marginTop: "10px" }}
+                style={{ marginTop: '10px' }}
                 fullWidth
                 disabled={!comment.length}
                 color="primary"
