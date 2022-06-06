@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 //prettier-ignore
-import {Paper, Typography, CircularProgress, Divider} from "@material-ui/core";
-import {Skeleton} from "@material-ui/lab";
+import {Paper, Typography, Divider} from "@material-ui/core";
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import moment from 'moment';
@@ -34,7 +33,6 @@ const PostDetails = () => {
     return (
       <Paper className={classes.loadingPaper} elevation={6}>
         <SkeletonAnimation />
-        {/* <CircularProgress /> */}
       </Paper>
     );
   }
