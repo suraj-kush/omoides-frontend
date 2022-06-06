@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from "react";
-import useStyles from "./styles.js";
-import FileBase from "react-file-base64";
-import { useSelector, useDispatch } from "react-redux";
-import { createPost, updatePost } from "../../actions/posts.js";
-import { TextField, Button, Typography, Paper } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
-import ChipInput from "material-ui-chip-input";
+import React, { useState, useEffect } from 'react';
+import useStyles from './styles.js';
+import FileBase from 'react-file-base64';
+import { useSelector, useDispatch } from 'react-redux';
+import { createPost, updatePost } from '../../actions/posts.js';
+import { TextField, Button, Typography, Paper } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+import ChipInput from 'material-ui-chip-input';
 
 const Form = ({ currentID, setCurrentID }) => {
   const [postData, setPostData] = useState({
-    title: "",
-    message: "",
+    title: '',
+    message: '',
     selectedFile: null,
     likes: [],
-    createdAt: Date.now,
+    createdAt: Date.now
   });
   const [tags, setTags] = useState([]);
 
-  const user = JSON.parse(localStorage.getItem("profile"));
+  const user = JSON.parse(localStorage.getItem('profile'));
   const { posts } = useSelector((state) => state.posts);
   const post = currentID ? posts.find((post) => post._id === currentID) : null;
   useEffect(() => {
@@ -27,7 +27,7 @@ const Form = ({ currentID, setCurrentID }) => {
         message: post.message,
         selectedFile: post.selectedFile,
         likes: post.likes,
-        createdAt: post.createdAt,
+        createdAt: post.createdAt
       });
       setTags(post.tags);
     }
@@ -35,16 +35,15 @@ const Form = ({ currentID, setCurrentID }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
-  
+
   const handleAdd = (chip) => {
     setTags([...tags, chip]);
   };
-  
+
   const handleDelete = (chip) => {
     setTags(tags.filter((tag) => tag !== chip));
   };
-  
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (currentID) {
@@ -53,22 +52,27 @@ const Form = ({ currentID, setCurrentID }) => {
           ...postData,
           name: user?.result?.name,
           creator: user?.result?._id,
-          tags: tags,
+          tags: tags
         })
-        );
-      } else {
-      dispatch(createPost({ ...postData, name: user?.result?.name, tags:tags }, history));
+      );
+    } else {
+      dispatch(
+        createPost(
+          { ...postData, name: user?.result?.name, tags: tags },
+          history
+        )
+      );
     }
     clear();
   };
   const clear = () => {
     setCurrentID(null);
     setPostData({
-      title: "",
-      message: "",
+      title: '',
+      message: '',
       selectedFile: null,
       likes: [],
-      createdAt: Date.now,
+      createdAt: Date.now
     });
     setTags([]);
   };
@@ -90,7 +94,7 @@ const Form = ({ currentID, setCurrentID }) => {
         onSubmit={handleSubmit}
       >
         <Typography variant="h6">
-          {currentID ? "Editing" : "Creating"} a Memory
+          {currentID ? 'Editing' : 'Creating'} a Memory
         </Typography>
         <TextField
           name="title"
@@ -121,7 +125,7 @@ const Form = ({ currentID, setCurrentID }) => {
           label="Tags"
           fullWidth
           variant="outlined"
-          newChipKeyCodes={[32]}
+          newChipKeyCodes={[32, 188]}
           onAdd={handleAdd}
           onDelete={handleDelete}
         />

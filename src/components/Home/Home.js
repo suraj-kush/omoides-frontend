@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 //prettier-ignore
 import { Container, Grow, Grid, Paper, AppBar, TextField, Button} from "@material-ui/core";
-import { useDispatch } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
-import ChipInput from "material-ui-chip-input";
+import { useDispatch } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
+import ChipInput from 'material-ui-chip-input';
 
-import { getPostsBySearch } from "../../actions/posts";
-import Posts from "../Posts/Posts.js";
-import Forms from "../Forms/Form.js";
-import useStyles from "./styles.js";
-import Pagination from "../Pagination";
+import { getPostsBySearch } from '../../actions/posts';
+import Posts from '../Posts/Posts.js';
+import Forms from '../Forms/Form.js';
+import useStyles from './styles.js';
+import Pagination from '../Pagination';
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
 const Home = () => {
   const [currentID, setCurrentID] = useState(0);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [tags, setTags] = useState([]);
 
   const classes = useStyles();
@@ -24,12 +24,12 @@ const Home = () => {
 
   const history = useHistory();
   const query = useQuery();
-  const page = query.get("page") || 1;
-  const searchQuery = query.get("searchQuery") || "";
-  const searchTags = query.get("tags") || "";
+  const page = query.get('page') || 1;
+  const searchQuery = query.get('searchQuery') || '';
+  const searchTags = query.get('tags') || '';
 
   const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       searchPosts();
     }
   };
@@ -44,26 +44,26 @@ const Home = () => {
 
   const searchPosts = () => {
     if (search.trim() || tags.length > 0) {
-      dispatch(getPostsBySearch({ search, tags: tags.join(",") }));
+      dispatch(getPostsBySearch({ search, tags: tags.join(',') }));
       history.push(
-        `/posts/search?searchQuery=${search || ""}&tags=${tags.join(",")}`
+        `/posts/search?searchQuery=${search || ''}&tags=${tags.join(',')}`
       );
     } else {
-      history.push("/");
+      history.push('/');
     }
   };
 
   //to populate the search fields
   useEffect(() => {
     if (searchTags) {
-      setTags(searchTags.split(","));
+      setTags(searchTags.split(','));
     }
     if (searchQuery) {
       setSearch(searchQuery);
     }
     if (searchTags || searchQuery) {
-      console.log("searchTags", searchTags);
-      console.log("searchQuery", searchQuery);
+      console.log('searchTags', searchTags);
+      console.log('searchQuery', searchQuery);
     }
     //eslint-disable-next-line
   }, []);
@@ -100,7 +100,7 @@ const Home = () => {
                 className={classes.chipInput}
                 value={tags}
                 label="Search Tags"
-                newChipKeyCodes={[32]}
+                newChipKeyCodes={[32, 188]}
                 variant="outlined"
                 onAdd={handleAdd}
                 onDelete={handleDelete}

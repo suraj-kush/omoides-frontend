@@ -1,23 +1,23 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 //prettier-ignore
 import {Card, Typography, CardActions, CardContent, CardMedia, Button, Menu, MenuItem} from "@material-ui/core";
-import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
-import ThumbUpAltOutlined from "@material-ui/icons/ThumbUpAltOutlined";
-import DeleleIcon from "@material-ui/icons/Delete";
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import moment from "moment";
-import { useHistory} from "react-router-dom";
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
+import ThumbUpAltOutlined from '@material-ui/icons/ThumbUpAltOutlined';
+import DeleleIcon from '@material-ui/icons/Delete';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import moment from 'moment';
+import { useHistory } from 'react-router-dom';
 
-import useStyles from "./styles.js";
-import { useDispatch } from "react-redux";
-import { deletePost, likePost } from "../../../actions/posts.js";
+import useStyles from './styles.js';
+import { useDispatch } from 'react-redux';
+import { deletePost, likePost } from '../../../actions/posts.js';
 
 const Post = ({ post, setCurrentID }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const user = JSON.parse(localStorage.getItem("profile"));
+  const user = JSON.parse(localStorage.getItem('profile'));
   const [likes, setLikes] = useState(post?.likes);
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -35,12 +35,11 @@ const Post = ({ post, setCurrentID }) => {
     setAnchorEl(null);
   };
 
-  const handleEdit=(event)=>{
+  const handleEdit = (event) => {
     event.stopPropagation();
     setCurrentID(post._id);
     setAnchorEl(null);
-  }
-
+  };
 
   const handleDelete = (event) => {
     event.stopPropagation();
@@ -72,12 +71,12 @@ const Post = ({ post, setCurrentID }) => {
           &nbsp;
           {likes.length > 2
             ? `You and ${likes.length - 1} others`
-            : `${likes.length} like${likes.length > 1 ? "s" : ""}`}
+            : `${likes.length} like${likes.length > 1 ? 's' : ''}`}
         </>
       ) : (
         <>
           <ThumbUpAltOutlined fontSize="small" />
-          &nbsp;{likes.length} {likes.length === 1 ? "Like" : "Likes"}
+          &nbsp;{likes.length} {likes.length === 1 ? 'Like' : 'Likes'}
         </>
       );
     }
@@ -111,7 +110,7 @@ const Post = ({ post, setCurrentID }) => {
         {(user?.result?.googleId || user?.result?._id) === post.creator && (
           <div className={classes.overlay2}>
             <Button
-              style={{ color: "white", minWidth: "24px" }}
+              style={{ color: 'white', minWidth: '24px' }}
               size="small"
               onClick={handleClick}
             >
@@ -120,10 +119,19 @@ const Post = ({ post, setCurrentID }) => {
             <Menu
               id="basic-menu"
               anchorEl={anchorEl}
+              getContentAnchorEl={null}
               open={open}
               onClose={handleClose}
               MenuListProps={{
-                "aria-labelledby": "basic-button",
+                'aria-labelledby': 'basic-button'
+              }}
+              anchorOrigin={{
+                vertical: 'center',
+                horizontal: 'right'
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left'
               }}
             >
               {/* prettier-ignore */}
