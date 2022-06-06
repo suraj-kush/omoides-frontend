@@ -1,55 +1,61 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
   root: {
-    padding: "20px",
-    borderRadius: "15px",
+    padding: '20px',
+    borderRadius: '15px'
   },
   media: {
-    borderRadius: "20px",
-    objectFit: "cover",
-    width: "100%",
-    maxHeight: "515px",
+    borderRadius: '20px',
+    objectFit: 'cover',
+    width: '100%',
+    maxHeight: '515px'
   },
   card: {
-    display: "flex",
-    width: "100%",
-    [theme.breakpoints.down("sm")]: {
-      flexWrap: "wrap",
-      flexDirection: "column-reverse",
-    },
+    display: 'flex',
+    width: '100%',
+    [theme.breakpoints.down('sm')]: {
+      flexWrap: 'wrap',
+      flexDirection: 'column-reverse'
+    }
   },
   section: {
-    borderRadius: "20px",
-    margin: "10px",
-    flex: 1,
+    borderRadius: '20px',
+    margin: '10px',
+    flex: 1
   },
   imageSection: {
-    marginLeft: "20px",
-    [theme.breakpoints.down("sm")]: {
-      marginLeft: 0,
-    },
+    marginLeft: '20px',
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: 0
+    }
   },
   recommendedPosts: {
-    display: "flex",
-    [theme.breakpoints.down("sm")]: {
-      flexDirection: "column",
-    },
+    display: 'flex',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column'
+    }
   },
   loadingPaper: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: "20px",
-    borderRadius: "15px",
-    height: "39vh",
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '20px',
+    borderRadius: '15px',
+    height: '39vh'
   },
   commentsOuterContainer: {
-    display: "flex",
-    justifyContent: "space-between",
+    display: 'flex',
+    justifyContent: 'space-between'
   },
   commentsInnerContainer: {
-    height: "200px",
-    overflowY: "auto",
-  },
+    height: '160px',
+    overflowY: 'scroll',
+    '&::-webkit-scrollbar': {
+      width: 0
+    },
+    '&::-moz-scrollbar': {
+      width: 0
+    }
+  }
 }));

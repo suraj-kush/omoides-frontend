@@ -32,22 +32,27 @@ const CommentSection = ({ post }) => {
           justifyContent="space-between"
         >
           <Grid
-            className={classes.commentsInnerContainer}
+            className={classes.commentsHeading}
             item
             xs={12}
             sm={12}
             md={12}
             lg={isLoggedIn ? 6 : 12}
           >
-            <Typography gutterBottom variant="h6">
-              Comments
-            </Typography>
-            {comments?.map((comment, index) => (
-              <Typography key={index} gutterBottom variant="subtitle1">
-                {comment}
+            <div>
+              <Typography gutterBottom variant="h6">
+                Comments
               </Typography>
-            ))}
-            <div ref={commentsRef} />
+            </div>
+            <div className={classes.commentsInnerContainer}>
+              {comments?.map((comment, index) => (
+                <Typography key={index} gutterBottom variant="subtitle1">
+                  <strong>{comment.slice(0, comment.indexOf(':'))} : </strong>
+                  {comment.slice(comment.indexOf(':') + 1)}
+                </Typography>
+              ))}
+              <div ref={commentsRef} />
+            </div>
           </Grid>
           {isLoggedIn && (
             <Grid item xs={12} sm={12} md={12} lg={6}>
