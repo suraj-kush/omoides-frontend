@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 //prettier-ignore
 import {Paper, Typography, CircularProgress, Divider} from "@material-ui/core";
+import {Skeleton} from "@material-ui/lab";
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import moment from 'moment';
@@ -8,6 +9,7 @@ import moment from 'moment';
 import useStyles from './styles.js';
 import { getPost, getPostsBySearch } from '../../actions/posts';
 import CommentSection from './CommentSection.jsx';
+import SkeletonAnimation from './SkeletonAnimation.jsx';
 
 const PostDetails = () => {
   const { post, posts, isLoading } = useSelector((state) => state.posts);
@@ -31,7 +33,8 @@ const PostDetails = () => {
   if (isLoading && post) {
     return (
       <Paper className={classes.loadingPaper} elevation={6}>
-        <CircularProgress size="7em" />
+        <SkeletonAnimation />
+        {/* <CircularProgress /> */}
       </Paper>
     );
   }

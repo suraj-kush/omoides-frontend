@@ -1,6 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
+  boxing:{
+    padding: '0px',
+    margin: '0px',
+  },
   root: {
     padding: '20px',
     borderRadius: '15px'
@@ -9,7 +13,8 @@ export default makeStyles((theme) => ({
     borderRadius: '20px',
     objectFit: 'cover',
     width: '100%',
-    maxHeight: '515px'
+    maxHeight: '515px',
+    maxWidth:'800px'
   },
   card: {
     display: 'flex',
@@ -42,7 +47,7 @@ export default makeStyles((theme) => ({
     alignItems: 'center',
     padding: '20px',
     borderRadius: '15px',
-    height: '39vh'
+    // height: '39vh'
   },
   commentsOuterContainer: {
     display: 'flex',
@@ -52,9 +57,6 @@ export default makeStyles((theme) => ({
     height: '160px',
     overflowY: 'scroll',
     '&::-webkit-scrollbar': {
-      width: 0
-    },
-    '&::-moz-scrollbar': {
       width: 0
     }
   }
