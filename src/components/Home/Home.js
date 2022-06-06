@@ -61,10 +61,6 @@ const Home = () => {
     if (searchQuery) {
       setSearch(searchQuery);
     }
-    if (searchTags || searchQuery) {
-      console.log('searchTags', searchTags);
-      console.log('searchQuery', searchQuery);
-    }
     //eslint-disable-next-line
   }, []);
 
@@ -116,9 +112,13 @@ const Home = () => {
               </Button>
             </AppBar>
             <Forms setCurrentID={setCurrentID} currentID={currentID} />
-            <Paper className={classes.pagination} elevation={6}>
-              <Pagination page={page} />
-            </Paper>
+            {/* //console log search tags length */}
+            {console.log(searchTags.length)}
+            {(!searchQuery && !searchTags.length) && (
+              <Paper className={classes.pagination} elevation={6}>
+                <Pagination page={page} />
+              </Paper>
+            )}
           </Grid>
         </Grid>
       </Container>
